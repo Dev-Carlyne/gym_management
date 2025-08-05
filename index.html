@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit Track</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('images/1.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6); /* dark overlay */
+            z-index: -1;
+        }
+
+        header {
+            background-color: rgba(0,0,0,0.8);
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: #fff;
+            padding: 10px 20px;
+            margin-top: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .feature-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            flex: 1 1 30%;
+            min-width: 250px;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin: 30px;
+        }
+
+        .feedback-card {
+            background-color: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        footer {
+            background-color: rgba(0,0,0,0.8);
+            padding: 20px;
+            text-align: center;
+            color: #ccc;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Fit Track</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Your Fitness Journey Starts Here</h2>
+            <p>Manage your fitness goals, book classes, and track your progress with ease.</p>
+            <a href="register.html" class="btn">Get Started</a>
+        </section>
+
+        <section class="features">
+            <div class="feature-box">
+                <h3>Secure Login</h3>
+                <p>Access your personalized dashboard as an admin or client.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Class Booking</h3>
+                <p>Choose your favorite fitness class and reserve your spot.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Track Progress</h3>
+                <p>View reports and track your performance over time.</p>
+            </div>
+        </section>
+    </main>
+
+    <div class="container feedback-preview">
+        <h2>What Our Users Say</h2>
+        <div id="feedbackList">Loading feedback...</div>
+    </div>
+    
+    <script>
+        fetch('fetch_feedback.php')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('feedbackList');
+                list.innerHTML = "";
+
+                if (data.length === 0) {
+                    list.innerHTML = "<p>No feedback yet. Be the first to share!</p>";
+                } else {
+                    data.forEach(item => {
+                        const entry = document.createElement('div');
+                        entry.classList.add('feedback-card');
+                        entry.innerHTML = `<p>"${item.message}"</p><small>Submitted on ${new Date(item.submitted_at).toLocaleDateString()}</small>`;
+                        list.appendChild(entry);
+                    });
+                }
+            });
+    </script>
+    
+    <footer>
+        <div class="container feedback-section">
+            <h2>We Value Your Feedback</h2>
+            <p>Your thoughts help us improve your experience at the gym. Let us know how we're doing!</p>
+            <a href="feedback.php" class="btn">Leave Feedback</a>
+        </div>
+        <p>&copy; 2025 Fit Track. All rights reserved.</p>
+    </footer>
+</body>
+</html>
