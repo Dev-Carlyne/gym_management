@@ -92,7 +92,20 @@ $result = mysqli_query($conn, $sql);
     </style>
 </head>
 <body>
-<div class="overlay">
+    <div style="text-align: center;">
+     <a href="admin_dashboard.php" 
+     style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+        ">← Back to Dashboard</a>
+    </div> 
+    
+    <div class="overlay">
     <h1>Manage Gym Classes</h1>
 
     <a href="add_class.php" class="btn">Add New Class</a>

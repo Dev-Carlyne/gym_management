@@ -10,12 +10,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_name = $_POST['item_name'];
     $description = $_POST['description'];
     $quantity = $_POST['quantity'];
+    $image = $item['image']; // fallback to current image
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $maxFileSize = 2 * 1024 * 1024; // 2MB
+        $fileType = mime_content_type($_FILES['image']['tmp_name']);
+        $fileSize = $_FILES['image']['size'];
 
-    $update = "UPDATE inventory SET 
-                item_name = '$item_name',
-                description = '$description',
-                quantity = $quantity
-               WHERE item_id = $id";
+        if (!in_array($fileType, $allowedTypes)) {
+            die("Invalid file type. Only JPG, PNG, and GIF files are allowed.");
+        }
+
+        if ($fileSize > $maxFileSize) {
+            die("File size exceeds the 2MB limit.");
+        }
+
+        $targetDir = "images/";
+        $image = basename($_FILES["image"]["name"]);
+        $targetFile = $targetDir . $image;
+
+        if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+            die("Failed to upload the file.");
+        }
+    }
+    
+    $update = "UPDATE inventory 
+            SET item_name='$item_name', 
+            description='$description', 
+            quantity=$quantity, 
+            image='$image' 
+            WHERE item_id=$id";
     mysqli_query($conn, $update);
     header("Location: manage_inventory.php");
     exit;
@@ -86,7 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         footer {
-            position: fixed;
             bottom: 0;
             width: 100%;
             text-align: center;
@@ -98,6 +121,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
+<div style="text-align: center;">
+    <a href="admin_dashboard.php" 
+    style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+    ">← Back to Dashboard</a>
+</div>
+
 <div class="overlay">
     <h1>Edit Inventory Item</h1>
 
@@ -111,9 +147,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label>Quantity:</label><br>
         <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" required><br>
 
+        <label>Image:</label>
+        <input type="file" name="image"><br>
+
+        <?php if (!empty($item['image'])) : ?>
+        <img src="images/<?php echo htmlspecialchars($item['image']); ?>" width="150"><br>
+        <?php endif; ?>
+
         <button type="submit">Update Item</button>
     </form>
 </div>
+
 <footer>
     <p>&copy; 2025 Fit Track. All rights reserved.</p>
 </footer>

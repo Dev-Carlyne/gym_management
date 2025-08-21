@@ -94,6 +94,18 @@ $result = mysqli_query($conn, $sql);
     <h1>Inventory Management</h1>
 
     <a href="add_inventory.php" class="btn">+ Add New Item</a>
+    <div style="text-align: center;">
+        <a href="admin_dashboard.php" 
+     style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+     ">← Back to Dashboard</a>
+    </div>
 
     <table>
         <thead>
@@ -101,6 +113,7 @@ $result = mysqli_query($conn, $sql);
                 <th>Item Name</th>
                 <th>Description</th>
                 <th>Quantity</th>
+                <th>Image</th>
                 <th>Added On</th>
                 <th>Actions</th>
             </tr>
@@ -111,6 +124,7 @@ $result = mysqli_query($conn, $sql);
                     <td><?php echo htmlspecialchars($row['item_name']); ?></td>
                     <td><?php echo htmlspecialchars($row['description']); ?></td>
                     <td><?php echo $row['quantity']; ?></td>
+                    <td></td>
                     <td><?php echo $row['created_at']; ?></td>
                     <td>
                         <a href="edit_inventory.php?id=<?php echo $row['item_id']; ?>">Edit</a> |
@@ -121,6 +135,7 @@ $result = mysqli_query($conn, $sql);
         </tbody>
     </table>
 </div>
+
 <footer>
     <p>&copy; 2025 Fit Track. All rights reserved.</p>
 </footer>

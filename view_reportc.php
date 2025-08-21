@@ -18,7 +18,7 @@ $id_number = $_SESSION['id_number'];
         body {
             margin: 0;
             padding: 0;
-            background: url('images/1.jpeg') no-repeat center center fixed;
+            background: url('images/7.jpeg') no-repeat center center fixed;
             background-size: cover;
             font-family: Arial, sans-serif;
             color: #fff;
@@ -74,6 +74,18 @@ $id_number = $_SESSION['id_number'];
     </style>
 </head>
 <body>
+    <div style="text-align: center;">
+        <a href="client_dashboard.php" 
+        style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+    ">← Back to Dashboard</a>
+    
     <h1>Your Activity History</h1>
 
     <!-- Booked Classes -->

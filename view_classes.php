@@ -81,6 +81,18 @@ footer {
     </style>
 </head>
 <body>
+    <div style="text-align: center;">
+        <a href="client_dashboard.php" 
+        style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+     ">← Back to Dashboard</a>
+    </div> 
 
     <h1>Available Classes</h1>
 

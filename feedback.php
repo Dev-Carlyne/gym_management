@@ -101,7 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: center;
             color: #ccc;
             padding: 15px;
-            position: fixed;
             bottom: 0;
             width: 100%;
         }
@@ -115,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-
+   
     <h1>Submit Feedback</h1>
 
     <?php if (!empty($success)) { echo "<p class='status'>$success</p>"; } ?>
@@ -128,7 +127,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="submit" class="btn">Submit</button>
     </form>
 
-    <a href="index.html" class="btn">← Back to Home</a>
+    <div style="text-align: center;">
+        <a href="client_dashboard.php" 
+        style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+    ">← Back to Dashboard</a>
 
     <footer>
         <p>&copy; 2025 Fit Track. All rights reserved.</p>

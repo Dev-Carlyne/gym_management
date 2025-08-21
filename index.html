@@ -77,15 +77,9 @@
             margin: 30px;
         }
 
-        .feedback-card {
-            background-color: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-
         footer {
             background-color: rgba(0,0,0,0.8);
+            position: fixed;
             padding: 20px;
             text-align: center;
             color: #ccc;
@@ -134,36 +128,12 @@
         </section>
     </main>
 
-    <div class="container feedback-preview">
-        <h2>What Our Users Say</h2>
-        <div id="feedbackList">Loading feedback...</div>
-    </div>
-    
-    <script>
-        fetch('fetch_feedback.php')
-            .then(response => response.json())
-            .then(data => {
-                const list = document.getElementById('feedbackList');
-                list.innerHTML = "";
-
-                if (data.length === 0) {
-                    list.innerHTML = "<p>No feedback yet. Be the first to share!</p>";
-                } else {
-                    data.forEach(item => {
-                        const entry = document.createElement('div');
-                        entry.classList.add('feedback-card');
-                        entry.innerHTML = `<p>"${item.message}"</p><small>Submitted on ${new Date(item.submitted_at).toLocaleDateString()}</small>`;
-                        list.appendChild(entry);
-                    });
-                }
-            });
-    </script>
-    
     <footer>
-        <div class="container feedback-section">
-            <h2>We Value Your Feedback</h2>
+        <div class="container contact">
+            <h2>Contact us</h2>
             <p>Your thoughts help us improve your experience at the gym. Let us know how we're doing!</p>
-            <a href="feedback.php" class="btn">Leave Feedback</a>
+            <br>
+            <p>Send us an email at fittrackke@gmail.com or contact us at +254771246544</p>
         </div>
         <p>&copy; 2025 Fit Track. All rights reserved.</p>
     </footer>

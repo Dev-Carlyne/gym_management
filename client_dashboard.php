@@ -1,4 +1,5 @@
 <?php
+include 'db_connect.php';
 session_start();
 
 // Check if the user is logged in and is a client
@@ -7,6 +8,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
     header("Location: login.php");
     exit();
 }
+
+$sql = "SELECT * FROM inventory WHERE quantity > 0";
+$result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -179,27 +183,29 @@ footer {
             </ul>
         </nav>
     </div>
+    
     <div>
-        <h1>View Classes</h1>
-        <P>In Fit Track, we offer a variety of classes. Interested in joining one?<br>Check out  our catalog.</P>
+        <h1 style="text-align: center;background-color: #ffffff; margin-top: 40px;">Available Equipment</h1><br>
+        <p style="text-align:center; background-color: #ffffff;">Here are some of the items available for use at the gym.</p><br>
     </div>
+
     <div class="gallery-container">
+        <?php while ($item = mysqli_fetch_assoc($result)) : ?>
         <div class="gallery-card">
+            <?php if (!empty($item['image'])) : ?>
+                <img src="images/<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['item_name']); ?>">
+            <?php else : ?>
+                <img src="images/d-bells.jpeg" alt="Default Inventory Image">
+            <?php endif; ?>
             <div class="card-info">
-             <h2>Cardio Burn</h2>
-             <p>Boost your stamina and heart health with our high-energy cardio sessions.</p>
-             <button>Join Now</button>
+                <h2><?php echo htmlspecialchars($item['item_name']); ?></h2>
+                <p><?php echo htmlspecialchars($item['description']); ?></p>
+                <p><strong>Available:</strong> <?php echo $item['quantity']; ?></p>
             </div>
         </div>
-        <div class="gallery-card">
-            <img src="images/class2.jpg" alt="Strength Class">
-            <div class="card-info">
-             <h2>Strength Training</h2>
-             <p>Build muscle and tone your body with expert-led strength programs.</p>
-             <button>Learn More</button>
-            </div>
-        </div>
+        <?php endwhile; ?>
     </div>
+
     <footer>
         <p>&copy; 2025 Fit Track. All rights reserved.</p>
     </footer>

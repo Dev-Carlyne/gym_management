@@ -114,6 +114,18 @@ $result = mysqli_query($conn, $sql);
             <?php endif; ?>
         </tbody>
     </table>
+    <div style="text-align: center;">
+    <a href="admin_dashboard.php" 
+    style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+    ">← Back to Dashboard</a>
+</div>
 
     <footer>
         <p>&copy; 2025 Fit Track. All rights reserved.</p>

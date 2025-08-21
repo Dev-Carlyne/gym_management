@@ -11,6 +11,8 @@ if (!$booking_id) {
     exit;
 }
 
+// Removed redundant assignment
+
 // Get booking and class price
 $query = "SELECT b.id_number, b.class_id, c.price 
           FROM bookings b 
@@ -98,10 +100,11 @@ $amount = $data['price'];
     <h2>Confirm Payment</h2>
     <p>Class Price: Ksh <?php echo $amount; ?></p>
 
-    <form action="process_payment.php" method="POST">
-        <input type="hidden" name="booking_id" value="<?php echo $booking_id; ?>">
-        <input type="hidden" name="amount" value="<?php echo $amount; ?>">
-        <button type="submit">Pay Now</button>
+    <form action="stk_push.php" method="POST">
+    <input type="hidden" name="booking_id" value="<?php echo htmlspecialchars($booking_id); ?>">
+    <label>Phone Number:</label>
+    <input type="text" name="phone" placeholder="07XXXXXXXX" required>
+    <button type="submit">Pay with M-Pesa</button>
     </form>
 </div>
 

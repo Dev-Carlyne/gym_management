@@ -42,12 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $insert_result = mysqli_query($conn, $insert);
 
     if ($insert_result) {
-        $booking_id = mysqli_insert_id($conn);
-        echo "<h2>Booking successful.</h2>";
-        echo "<p><a href='payment.php?booking_id=$booking_id'>Proceed to Payment</a></p>";
-        echo "<p><a href='client_dashboard.php'>Go to Dashboard</a></p>";
+     $booking_id = mysqli_insert_id($conn);
+     echo "<h2>Booking successful.</h2>";
+     echo "<p><a href='payment.php?booking_id=$booking_id'>Proceed to Payment</a></p>";
+     echo "<p><a href='client_dashboard.php'>Go to Dashboard</a></p>";
     } else {
-        echo "Booking failed: " . mysqli_error($conn);
+     echo "Booking failed.";
     }
 } else {
     die("Invalid request method.");

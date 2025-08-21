@@ -69,6 +69,18 @@ session_start();
     </style>
 </head>
 <body>
+<div style="text-align: center;">
+    <a href="admin_dashboard.php" 
+    style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+    ">← Back to Dashboard</a>
+</div>
 <div class="overlay">
     <h1>All Client Activity Reports</h1>
 
@@ -131,33 +143,61 @@ session_start();
     ?>
 
     <!-- All Feedback -->
-    <h2>📝 Feedback</h2>
-    <?php
-    $feedback_query = "
-        SELECT f.message, f.submitted_at, u.name, u.id_number
-        FROM feedback f
-        JOIN users u ON f.id_number = u.id_number
-        ORDER BY f.submitted_at DESC
-    ";
-    $result = mysqli_query($conn, $feedback_query);
-    if (mysqli_num_rows($result) > 0) {
-        echo "<table><tr><th>Client ID</th><th>Name</th><th>Message</th><th>Date</th></tr>";
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo "<tr>
-                    <td>{$row['id_number']}</td>
-                    <td>{$row['name']}</td>
-                    <td>{$row['message']}</td>
-                    <td>{$row['submitted_at']}</td>
-                  </tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "<p>No feedback found.</p>";
+<h2>📝 Feedback</h2>
+<?php
+$feedback_query = "
+    SELECT f.message, f.submitted_at, f.rating, f.source, u.name, u.id_number
+    FROM feedback f
+    JOIN users u ON f.id_number = u.id_number
+    ORDER BY f.submitted_at DESC
+";
+
+$result = mysqli_query($conn, $feedback_query);
+
+if ($result && mysqli_num_rows($result) > 0) {
+    echo "<table border='1' cellpadding='8' cellspacing='0'>
+            <tr style='background-color:#f2f2f2;'>
+                <th>Client ID</th>
+                <th>Name</th>
+                <th>Message</th>
+                <th>Rating</th>
+                <th>Source</th>
+                <th>Submitted At</th>
+            </tr>";
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $id = $row['id_number'] ?? '-';
+                $name = $row['source'] === 'public' ? 'Public User' : ($row['name'] ?? 'Unknown');
+                $message = $row['message'];
+                $date = $row['submitted_at'];
+            
+                // Safely handle rating
+                if (isset($row['rating']) && is_numeric($row['rating'])) {
+                    $star_display = str_repeat('⭐', (int)$row['rating']);
+                } else {
+                    $star_display = 'No Rating';
+                }
+            
+
+        echo "<tr>
+                <td>{$row['id_number']}</td>
+                <td>{$row['name']}</td>
+                <td>{$row['message']}</td>
+                <td>{$star_display}</td>
+                <td>{$row['source']}</td>
+                <td>{$row['submitted_at']}</td>
+              </tr>";
     }
-    ?>
-</div>
-<footer>
-    <p>&copy; 2025 Fit Track. All rights reserved.</p>
-</footer>
+
+    echo "</table>";
+} else {
+    echo "<p>No feedback found.</p>";
+}
+?>
+
+ </div>
+     <footer>
+         <p>&copy; 2025 Fit Track. All rights reserved.</p>
+    </footer>
 </body>
 </html>

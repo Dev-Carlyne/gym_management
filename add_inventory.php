@@ -1,13 +1,37 @@
 <?php
 include 'db_connect.php';
 
+$image = '';
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $targetDir = "images/";
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif','image/jpg'];
+    $maxFileSize = 2 * 1024 * 1024; // 2MB
+
+    $image = basename($_FILES["image"]["name"]);
+    $targetFile = $targetDir . $image;
+    $fileType = mime_content_type($_FILES["image"]["tmp_name"]);
+    $fileSize = $_FILES["image"]["size"];
+
+    if (!in_array($fileType, $allowedTypes)) {
+        die("Error: Only JPEG, PNG, GIF, and JPG files are allowed.");
+    }
+
+    if ($fileSize > $maxFileSize) {
+        die("Error: File size exceeds the 2MB limit.");
+    }
+
+    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+        die("Error: Failed to upload the file.");
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_name = $_POST['item_name'];
     $description = $_POST['description'];
     $quantity = $_POST['quantity'];
 
-    $sql = "INSERT INTO inventory (item_name, description, quantity) 
-            VALUES ('$item_name', '$description', $quantity)";
+    $sql = "INSERT INTO inventory (item_name, description, quantity, image) 
+      VALUES ('$item_name', '$description', $quantity, '$image')";
     mysqli_query($conn, $sql);
     header("Location: manage_inventory.php");
     exit;
@@ -90,10 +114,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
+<div style="text-align: center;">
+    <a href="admin_dashboard.php" 
+    style="
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px 0;
+    ">← Back to Dashboard</a>
+</div>
 <div class="overlay">
     <h1>Add Inventory Item</h1>
 
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         <label>Item Name:</label><br>
         <input type="text" name="item_name" required><br>
 
@@ -102,6 +138,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label>Quantity:</label><br>
         <input type="number" name="quantity" required><br>
+        
+        <label>Image:</label>
+        <input type="file" name="image"><br>
 
         <button type="submit">Add Item</button>
     </form>

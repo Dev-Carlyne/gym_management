@@ -1,0 +1,21 @@
+2025-08-11 18:17:49 - CALLBACK RECEIVED
+
+
+2025-08-11 18:18:43 - CALLBACK RECEIVED
+Array
+(
+    [Body] => Array
+        (
+            [stkCallback] => Array
+                (
+                    [MerchantRequestID] => 8442-4724-b651-c43decdfd8da6492
+                    [CheckoutRequestID] => ws_CO_110820251918317708374149
+                    [ResultCode] => 1032
+                    [ResultDesc] => Request Cancelled by user
+                )
+
+        )
+
+)
+
+
