@@ -15,16 +15,16 @@ A web-based Gym Management System designed to manage clients, classes, payments,
 ## 🖼️ Screenshots
 
 ### 🔐 Login Page
-![Login Page](screenshots/login.png)
+![Login Page](screenshots/login.PNG)
 
 ### 🧑‍💼 Admin Dashboard
-![Admin Dashboard](screenshots/dashboard.png)
+![Admin Dashboard](screenshots/dashboard.PNG)
 
 ### 📅 Class Booking
-![Class Booking](screenshots/class-booking.png)
+![Class Booking](screenshots/class-booking.PNG)
 
 ### 💳 Payment Page
-![Payment Page](screenshots/payment.png)
+![Payment Page](screenshots/payment.PNG)
 
 ---
 
