@@ -109,14 +109,39 @@
       <input type="text" id="id_number" name="id_number" required>
 
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
+      <div style="position: relative;">
+        <input type="password" id="password" name="password" required>
+        <small>Password must be at least 8 characters, include 1 uppercase letter and 1 symbol.</small>
+       <span onclick="togglePassword('password', this)" 
+        style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#333; background:#fff; padding:2px 5px; border-radius:4px; font-size:12px;">
+         Show
+        </span>
+      </div>
 
       <button type="submit">Login</button>
     </form>
+    <p style="text-align:center; margin-top:10px;">
+      <a href="change_password.php" style="color:#ff6b6b; text-decoration:none; font-weight:bold;">
+        Forgot Password? Click to change.
+      </a>
+    </p>
   </main>
 
   <footer>
     <p>&copy; 2025 Fit Track. All rights reserved.</p>
   </footer>
+  <script>
+    function togglePassword(fieldId, toggleElement) {
+      const field = document.getElementById(fieldId);
+      if (field.type === "password") {
+        field.type = "text";
+        toggleElement.textContent = "Hide";
+      } else {
+        field.type = "password";
+        toggleElement.textContent = "Show";
+      }
+    }
+    </script>
+    
 </body>
 </html>

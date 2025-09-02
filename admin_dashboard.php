@@ -153,6 +153,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
         </div>
 
         <div class="card">
+            <h2><i class="fas fa-dumbbell"></i> Messages</h2>
+            <p>Track and reply to all messages sent by the client.</p>
+            <div class="action">
+                <a href="admin_messages.php" class="btn">Messages</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-calendar-alt"></i> Post Notifications</h2>
+            <p>Post news, updates and upcoming classes to the clients.</p>
+            <div class="action">
+                <a href="post_notification.php" class="btn">Post Notifications</a>
+            </div>
+        </div>
+
+        <div class="card">
             <h2><i class="fas fa-sign-out-alt"></i> Log Out</h2>
             <p>Click below to securely log out of your admin account.</p>
             <div class="action">

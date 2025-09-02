@@ -43,7 +43,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     width: 300px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     color: #fff;
 }
@@ -103,6 +103,7 @@ footer {
                 <p><strong>Instructor:</strong> <?php echo htmlspecialchars($row['trainer']); ?></p>
                 <p><strong>Schedule:</strong> <?php echo htmlspecialchars($row['schedule']); ?></p>
                 <p><strong>Max Participants:</strong> <?php echo htmlspecialchars($row['max_participants']); ?></p>
+                <p><strong>Price:</strong> <?php echo htmlspecialchars($row['price']); ?></p>
                 <form action="book_class.php" method="POST">
                     <input type="hidden" name="id_number" value="<?php echo $id_number; ?>">
                     <input type="hidden" name="class_id" value="<?php echo $row['class_id']; ?>">

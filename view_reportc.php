@@ -18,14 +18,14 @@ $id_number = $_SESSION['id_number'];
         body {
             margin: 0;
             padding: 0;
-            background: url('images/7.jpeg') no-repeat center center fixed;
+            background: url('images/1.jpeg') no-repeat center center fixed;
             background-size: cover;
             font-family: Arial, sans-serif;
             color: #fff;
         }
 
         .overlay {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
             min-height: 100vh;
             padding: 30px;
             padding-bottom: 100px;
@@ -42,7 +42,7 @@ $id_number = $_SESSION['id_number'];
             width: 95%;
             margin: 30px auto;
             background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(100px);
         }
 
         th, td {
@@ -166,6 +166,36 @@ $id_number = $_SESSION['id_number'];
         echo "</table>";
     } else {
         echo "<p>No feedback found.</p>";
+    }
+    ?>
+
+    <!-- Attendance -->
+    <h2>✅ Attendance Record</h2>
+    <?php
+    $attendance_query = "
+            SELECT a.status, a.marked_at, c.class_name, c.schedule
+            FROM attendance a
+            JOIN bookings b ON a.booking_id = b.booking_id
+            JOIN classes c ON b.class_id = c.class_id
+            JOIN users u ON b.id_number = u.id_number
+            WHERE u.id_number = '$id_number'
+            ORDER BY a.marked_at DESC
+     ";
+    $attendance_result = mysqli_query($conn, $attendance_query);
+
+    if (mysqli_num_rows($attendance_result) > 0) {
+            echo "<table><tr><th>Class</th><th>Schedule</th><th>Status</th><th>Marked At</th></tr>";
+            while ($row = mysqli_fetch_assoc($attendance_result)) {
+                echo "<tr>
+                        <td>{$row['class_name']}</td>
+                        <td>{$row['schedule']}</td>
+                        <td>{$row['status']}</td>
+                        <td>{$row['marked_at']}</td>
+                    </tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "<p>No attendance records found.</p>";
     }
     ?>
 </body>
